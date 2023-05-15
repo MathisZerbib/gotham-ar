@@ -1,0 +1,45 @@
+@startuml
+!theme mars
+
+group Send data
+skinparam sequenceMessageAlign right
+ESP8266 -> API : http:127.0.0.1:1880/sensor?**id=1&count=42&key=424242**
+API -> Storage : Save **{"id":"1","count":"42","key":"424242"}**
+Storage -> API : Data saved
+API -> ESP8266 : Done
+
+skinparam sequenceMessageAlign right
+ESP8266 -> API : http:127.0.0.1:1880/sensor?**id=2&count=42&key=424242**
+API -> Storage : Save **{"id":"2","count":"42","key":"424242"}**
+Storage -> API : Data saved
+API -> ESP8266 : Done
+
+skinparam sequenceMessageAlign right
+ESP8266 -> API : http:127.0.0.1:1880/sensor?**id=3&count=42&key=424242**
+API -> Storage : Save **{"id":"3","count":"42","key":"424242"}**
+Storage -> API : Data saved
+API -> ESP8266 : Done
+
+end
+
+group Get data from sensor id
+
+skinparam sequenceMessageAlign right
+ESP8266 -> API : http:127.0.0.1:1880/status?**id=1**
+API -> Storage : Request data for sensor id = 1
+Storage -> API : **{"id":"1","count":"42","key":"424242"}**
+API -> ESP8266 : **{"id":"1","count":"42","key":"424242"}**
+
+end
+
+group Get data from all sensors
+
+skinparam sequenceMessageAlign right
+ESP8266 -> API : http:127.0.0.1:1880/status_all
+API -> Storage : Request data for sensor id = 1
+Storage -> API : **[{"id":"1","count":"42","key":"424242"}, ...]**
+
+API -> ESP8266 : **[{"id":"1","count":"42","key":"424242"}, ...]**
+
+end
+@enduml

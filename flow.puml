@@ -1,0 +1,18 @@
+@startuml
+!theme mars
+!pragma useVerticalIf on
+start
+
+:GET request
+http:127.0.0.1:1880/sensor?**id=1&count=42&key=424242**;
+
+if (**is key = "424242" ?**) then (true)
+  #palegreen:Store request args into JSON;
+else (false)
+   #pink:Reject data;
+endif
+
+:Return status;
+
+stop
+@enduml
